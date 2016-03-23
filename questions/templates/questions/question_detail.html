@@ -4,7 +4,7 @@
 
 {% block content %}
     <div>{{ object.text }}</div>
-    {% for answer in object.answers %}
+    {% for answer in object.answers.all %}
         <b>{{ answer.created_at }}</b>
         <div>{{ answer.text }}</div>
     {% endfor %}
