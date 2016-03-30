@@ -12,8 +12,10 @@ class CategoryDetail(DetailView):
     template_name = 'questions/category_detail.html'
     context_object_name = 'category'
 
-    def get_queryset(self):
-        return super(CategoryDetail, self).get_queryset().filter(is_published=True)
+    def get_context_data(self, **kwargs):
+        context = super(CategoryDetail, self).get_context_data(**kwargs)
+        context['questions'] = self.object.questions.filter(is_published=True)
+        return context
 
 
 class QuestionCreate(CreateView):
