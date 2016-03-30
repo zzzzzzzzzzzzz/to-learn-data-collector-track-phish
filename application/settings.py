@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'questions',
+    'question',
     'answers',
 ]
 
@@ -124,3 +124,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/vagrant/vdata/stackoverflow/collected_static/'
 STATICFILES_DIRS = ('/home/vagrant/vdata/stackoverflow/src/static/', )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/home/vagrant/vdata/stackoverflow/media/'
+
+LOGIN_URL = 'core:login'
+LOGOUT_URL = 'core:logout'
+LOGIN_REDIRECT_URL = 'index'

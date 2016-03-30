@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <div>
+        Категории<br>
+        {% for category in categories %}
+            <a href="{% url "questions:category_detail" pk=category.pk %}">{{ category.name }}</a>
+            <br/>
+        {% endfor %}
+    </div><br>
+    <div>
+        Последние вопросы<br>
+        {% for question in last_questions %}
+            {{ question.author }} <b>{{ question.created_at }}</b><a href="{% url "questions:question_detail" pk=question.pk %}">{{ question.title }}</a>
+            <br/>
+        {% endfor %}
+    </div><br>
+    <div>
+        Последние ответы<br>
+        {% for answer in last_answers %}
+            {{ answer.author }} <b>{{ answer.created_at }}</b>
+            <div>{{ answer.text|slice:":50" }}...</div>
+        {% endfor %}
+    </div>
+{% endblock %}
