@@ -1,5 +1,14 @@
+{% extends "core/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
 <form method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit"/>
+    {{ form.username.label_tag }}
+    {{ form.username|add_class:"form-control" }}
+    {{ form.password.label_tag }}
+    {{ form.password|add_class:"form-control" }}
+    <input class="form-control" type="submit"/>
 </form>
+{% endblock %}

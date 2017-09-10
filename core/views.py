@@ -1,16 +1,12 @@
-from django.views.generic import TemplateView
-from django.db.models import Q
-from question.models import Question, Category
-from answers.models import Answer
+from django.views.generic import FormView
+from .forms import UrlInputForm
+from django.shortcuts import resolve_url
+from django.http import JsonResponse
 
 
-class IndexView(TemplateView):
-
+class IndexView(FormView):
     template_name = 'core/index.html'
+    form_class = UrlInputForm
 
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['last_questions'] = Question.objects.filter(is_published=True)[:5]
-        context['last_answers'] = Answer.objects.filter(question__is_published=True)[:5]
-        context['categories'] = Category.objects.all()
-        return context
+    def form_valid(self, form):
+        return JsonResponse({'urls': str(form.cleaned_data['urls'])})
