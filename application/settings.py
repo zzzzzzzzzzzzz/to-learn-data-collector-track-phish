@@ -84,12 +84,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/philip/project_m/collected_static/'
-STATICFILES_DIRS = ('/home/philip/project_m/src/core/static', )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/philip/project_m/media'
-
-LOGIN_URL = 'core:login'
-LOGOUT_URL = 'core:logout'
-LOGIN_REDIRECT_URL = 'index'

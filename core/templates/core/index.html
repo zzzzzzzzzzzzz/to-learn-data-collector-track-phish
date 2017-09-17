@@ -1,12 +1,13 @@
 {% extends "core/base.html" %}
 {% load bootstrap %}
 
-{% block title %}Ну что там у тебя, ммм?{% endblock %}
+{% block title %}Введите адреса в форму ниже. По адресу на каждой строчке, пожалуйста{% endblock %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
         {{ form }}
+        <br/>
         <input type="submit">
     </form>
 {% endblock %}

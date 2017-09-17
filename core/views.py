@@ -1,18 +1,27 @@
+# coding=utf-8
+import subprocess
+from django.contrib import messages
 from django.views.generic import FormView
 from .forms import UrlInputForm
-from django.shortcuts import resolve_url
-from django.http import JsonResponse
+import io
 import os.path
+import time
 
 
 class IndexView(FormView):
     template_name = 'core/index.html'
+    success_url = '/'
+    success_message = u'URL-ы успешно добавлены и отправлены на анализ, спасибо большое, продолжайте в том же духе, ' \
+                      u'пожалуйста =) '
     form_class = UrlInputForm
 
     def form_valid(self, form):
-        urls = str(form.cleaned_data['urls'])
-        urls_log_file = open(os.path.dirname(__file__) + '/../urls_log.txt', 'a')
-        urls_log_file.write(urls)
-        urls_log_file.write(",\n")
-        urls_log_file.close()
-        return JsonResponse({'urls': urls})
+        timestamp = int(time.time())
+        urls = form.cleaned_data['urls']
+        filename = 'urls_log_%d.txt' % timestamp
+        with io.open(filename, 'a', encoding='utf-8') as file:
+            file.write(urls)
+
+        subprocess.Popen(['scrapy crawl phish -a filename=%s' % filename], shell=True)
+        messages.success(self.request, self.success_message)
+        return super(IndexView, self).form_valid(form) # It's just the httpresponseredirect object
