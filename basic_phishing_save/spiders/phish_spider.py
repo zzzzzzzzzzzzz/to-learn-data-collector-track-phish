@@ -16,9 +16,7 @@ class PhishSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(PhishSpider, self).__init__(*args, **kwargs)
         self.settings = get_project_settings()
-        self.urls = ['https://yandex.ru/',
-                     'https://vk.com/',
-                     'https://suspicious254.000webhostapp.com/info-account.html?login-your-fbaccount=65965344']
+        self.urls = []
         self.url_number = 0
         if 'filename' not in kwargs:
             print "\n\nYou haven't specified filename with urls!\n\n"
