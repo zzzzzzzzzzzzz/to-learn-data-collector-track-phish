@@ -303,7 +303,6 @@ class SaveHtmlFilesAndProcessFeaturesPipeline(object):
         features = dict(features, **url_features)
         with io.open(filename, 'wb') as f:
             w = csv.DictWriter(f, features.keys())
-            w.writeheader()
             w.writerow(features)
 
         filename = 'results/%s/index.html' % item['url_number']
@@ -336,5 +335,4 @@ class ExternalInfoSpiderPipeline(object):
             os.makedirs(dirname)
         with io.open(filename, 'wb') as f:
             w = csv.DictWriter(f, features.keys())
-            w.writeheader()
             w.writerow(features)
