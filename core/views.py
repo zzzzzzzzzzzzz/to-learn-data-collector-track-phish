@@ -20,7 +20,7 @@ class IndexView(FormView):
         with open(filename, 'a') as f:
             f.write(urls)
 
-        subprocess.call(['scrapy crawl phish -a filename=%s' % filename], shell=True)
+        # subprocess.Popen(['scrapy crawl phish -a filename=%s' % filename], shell=True)
 
         urls_arr = urls.split('\n')
         filename_external = 'urls_log_external_%d.txt' % timestamp
@@ -28,6 +28,6 @@ class IndexView(FormView):
             for line in urls_arr:
                 f.write(str('https://google.com/search?q=site:'+line))
 
-        subprocess.call(['scrapy crawl external -a filename=%s' % filename_external], shell=True)
+        # subprocess.Popen(['scrapy crawl external -a filename=%s' % filename_external], shell=True)
         messages.success(self.request, self.success_message)
         return super(IndexView, self).form_valid(form)  # It's just the httpresponseredirect object
