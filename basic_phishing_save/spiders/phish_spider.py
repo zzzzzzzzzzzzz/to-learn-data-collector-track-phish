@@ -33,7 +33,6 @@ class PhishSpider(scrapy.Spider):
                 request.meta['proxy'] = next(self.proxy_iter)
             yield request
 
-
     def parse(self, response):
         css_pages = []
         js_pages = []
