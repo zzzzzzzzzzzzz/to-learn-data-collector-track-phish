@@ -17,19 +17,19 @@ class IndexView(FormView):
         timestamp = int(time.time())
         urls = form.cleaned_data['urls']
         filename = 'urls_log_%d.txt' % timestamp
-        with open(filename, 'a') as file:
-            file.write(str(urls))
+        with open(filename, 'a') as f:
+            f.write(urls)
 
         subprocess.Popen(['scrapy crawl phish -a filename=%s' % filename], shell=True)
 
-        urls_for_google = []
-        for url in urls:
-            urls_for_google.append('https://google.com/search?q=site:' + url)
+        urls_for_google = ''
+        with open(filename, 'r') as f:
+            urls_for_google += 'https://google.com/search?q=site:' + f.readline()
 
         filename_external = 'urls_log_external_%d.txt' % timestamp
-        with open(filename, 'a') as file:
-            file.write(str(urls_for_google))
+        with open(filename_external, 'a') as file:
+            file.write(urls_for_google)
 
         subprocess.Popen(['scrapy crawl external -a filename=%s' % filename_external], shell=True)
         messages.success(self.request, self.success_message)
-        return super(IndexView, self).form_valid(form) # It's just the httpresponseredirect object
+        return super(IndexView, self).form_valid(form)  # It's just the httpresponseredirect object
