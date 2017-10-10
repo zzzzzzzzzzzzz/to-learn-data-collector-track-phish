@@ -24,7 +24,9 @@ class IndexView(FormView):
 
         urls_for_google = ''
         with open(filename, 'r') as f:
-            urls_for_google += 'https://google.com/search?q=site:' + f.readline()
+            lines = f.readlines()
+            for line in lines:
+                urls_for_google += 'https://google.com/search?q=site:' + line
 
         filename_external = 'urls_log_external_%d.txt' % timestamp
         with open(filename_external, 'a') as file:
