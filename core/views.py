@@ -3,7 +3,6 @@ import subprocess
 from django.contrib import messages
 from django.views.generic import FormView
 from .forms import UrlInputForm
-import io
 import time
 
 
@@ -18,8 +17,8 @@ class IndexView(FormView):
         timestamp = int(time.time())
         urls = form.cleaned_data['urls']
         filename = 'urls_log_%d.txt' % timestamp
-        with io.open(filename, 'a', encoding='utf-8') as file:
-            file.write(urls)
+        with open(filename, 'a') as file:
+            file.write(str(urls))
 
         subprocess.Popen(['scrapy crawl phish -a filename=%s' % filename], shell=True)
 
@@ -28,8 +27,8 @@ class IndexView(FormView):
             urls_for_google.append('https://google.com/search?q=site:' + url)
 
         filename_external = 'urls_log_external_%d.txt' % timestamp
-        with io.open(filename, 'a', encoding='utf-8') as file:
-            file.write(urls_for_google)
+        with open(filename, 'a') as file:
+            file.write(str(urls_for_google))
 
         subprocess.Popen(['scrapy crawl external -a filename=%s' % filename_external], shell=True)
         messages.success(self.request, self.success_message)
