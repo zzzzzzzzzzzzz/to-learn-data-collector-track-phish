@@ -24,8 +24,8 @@ class IndexView(FormView):
         subprocess.Popen(['scrapy crawl phish -a filename=%s' % filename], shell=True)
 
         urls_for_google = []
-        for idx in range(len(urls)):
-            urls_for_google[idx] = 'https://google.com/search?q=site:' + urls[idx]
+        for url in urls:
+            urls_for_google.append('https://google.com/search?q=site:' + url)
 
         filename_external = 'urls_log_external_%d.txt' % timestamp
         with io.open(filename, 'a', encoding='utf-8') as file:
