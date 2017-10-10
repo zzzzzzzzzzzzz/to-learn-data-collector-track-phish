@@ -24,8 +24,9 @@ class IndexView(FormView):
 
         urls_arr = urls.split('\n')
         filename_external = 'urls_log_external_%d.txt' % timestamp
-        with open(filename_external, 'a') as file:
-            file.writelines(urls_arr)
+        with open(filename_external, 'a') as f:
+            for line in urls_arr:
+                f.write(str(line))
 
         subprocess.Popen(['scrapy crawl external -a filename=%s' % filename_external], shell=True)
         messages.success(self.request, self.success_message)
